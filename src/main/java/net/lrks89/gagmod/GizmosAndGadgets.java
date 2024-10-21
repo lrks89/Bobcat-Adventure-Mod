@@ -1,12 +1,13 @@
-package net.lrks89.bam;
+package net.lrks89.gagmod;
 
+import net.lrks89.gagmod.item.ModCreativeModeTabs;
+import net.lrks89.gagmod.item.ModItems;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -22,18 +23,21 @@ import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
-@Mod(BAMod.MOD_ID)
-public class BAMod {
+@Mod(GizmosAndGadgets.MOD_ID)
+public class GizmosAndGadgets {
     // Define mod id in a common place for everything to reference
-    public static final String MOD_ID = "bam";
+    public static final String MOD_ID = "gagmod";
     // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();
 
     // The constructor for the mod class is the first code that is run when your mod is loaded.
     // FML will recognize some parameter types like IEventBus or ModContainer and pass them in automatically.
-    public BAMod(IEventBus modEventBus, ModContainer modContainer) {
+    public GizmosAndGadgets(IEventBus modEventBus, ModContainer modContainer) {
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
+
+        ModCreativeModeTabs.CREATIVE_MODE_TABS.register(modEventBus);
+        ModItems.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (ExampleMod) to respond directly to events.
